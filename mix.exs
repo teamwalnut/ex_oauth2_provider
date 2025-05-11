@@ -8,8 +8,8 @@ defmodule ExOauth2Provider.Mixfile do
       app: :ex_oauth2_provider,
       version: @version,
       elixir: "~> 1.12",
-      elixirc_paths: elixirc_paths(Mix.env),
-      start_permanent: Mix.env == :prod,
+      elixirc_paths: elixirc_paths(Mix.env()),
+      start_permanent: Mix.env() == :prod,
       deps: deps(),
 
       # Hex
@@ -23,7 +23,7 @@ defmodule ExOauth2Provider.Mixfile do
   end
 
   def application do
-    [extra_applications: extra_applications(Mix.env)]
+    [extra_applications: extra_applications(Mix.env())]
   end
 
   defp extra_applications(:test), do: [:ecto, :logger]
@@ -35,17 +35,16 @@ defmodule ExOauth2Provider.Mixfile do
   defp deps do
     [
       {:ecto, "~> 3.10"},
+      {:ecto_sql, "~> 3.10"},
       {:plug, ">= 1.5.0 and < 2.0.0"},
       {:jason, "~> 1.2"},
 
       # Dev and test dependencies
       {:credo, "~> 1.5", only: [:dev, :test]},
-
       {:ex_doc, "~> 0.25", only: :dev},
-
-      {:ecto_sql, "~> 3.10", only: :test},
       {:plug_cowboy, "~> 2.0", only: :test},
-      {:postgrex, "~> 0.14", only: :test}]
+      {:postgrex, "~> 0.14", only: :test}
+    ]
   end
 
   defp package do
